@@ -1,0 +1,144 @@
+@import url('main.css');
+@font-face {
+    font-family: 'proxima Condensed Bold';
+    src: url('fonts/Proxima Nova ScOsf Condensed Bold.otf');
+}
+
+@font-face {
+    font-family: 'proxima thin';
+    src: url('fonts/Proxima Nova ScOsf Thin.otf');
+}
+
+@font-face {
+    font-family: 'proxima Alt Condensed Extrabold Italic';
+    src: url('fonts/Mark Simonson - Proxima Nova Alt Condensed Extrabold Italic.otf');
+}
+
+@font-face {
+    font-family: 'proxima Alt Regular';
+    src: url('fonts/Mark Simonson - Proxima Nova Alt Regular.otf');
+}
+
+@font-face {
+    font-family: 'Proxima Nova Regular';
+    src: url('fonts/Mark Simonson - Proxima Nova Regular.otf');
+}
+
+@font-face {
+    font-family: 'Proxima Nova ScOsf Condensed Regular';
+    src: url('fonts/Mark Simonson - Proxima Nova ScOsf Condensed Regular.otf');
+}
+
+@font-face {
+    font-family: 'Proxima Nova ScOsf Regular';
+    src: url('fonts/Proxima Nova ScOsf Regular.otf');
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 88px;
+    height: auto;
+    width: 100%;
+    min-height: 80vh;
+    padding: 2px;
+    box-sizing: border-box;
+}
+
+.form-one-box {
+    position: relative;
+    width: 100%;
+    margin: auto;
+    max-width: 500px;
+    height: 600px;
+    border-radius: 4px;
+    border: 1px solid lightgray;
+    background-color: white;
+    /*box-shadow: 0px 1px 2px rgba(128, 128, 128, .1), 0px -1px 2px rgba(128, 128, 128, .1);*/
+}
+
+.form-one-box-header {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 15%;
+    font-family: 'proxima thin';
+    border-bottom: 1px solid whitesmoke;
+}
+
+.form-one-box-header:hover {
+    cursor: pointer;
+}
+
+.form-one-box-header h3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 30%;
+    height: 100%;
+    margin: 0;
+}
+
+.form-one {
+    position: relative;
+    margin: 0% 5%;
+    width: 90%;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    color: darkslategray;
+    box-sizing: border-box;
+}
+
+.form-one-box span {
+    font-size: 0.875em;
+}
+
+.form-one-box span:hover {
+    cursor: pointer;
+}
+
+.form-input-holder {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: auto;
+}
+
+.form-input-holder input {
+    margin: 10px auto;
+    border: 1px solid white;
+    border-bottom: 1px solid gainsboro;
+}
+
+.form-one-button {
+    background-color: firebrick;
+    color: white;
+}
+
+.form-one-button:hover {
+    background-color: maroon;
+}
+
+footer {
+    top: 86px;
+}
+
+@media only screen and (min-width: 1280px) {
+    .container {
+        width: 1110px;
+        margin: auto;
+        top: 98px;
+    }
+    footer {
+        top: 96px;
+        padding: 50px 0px;
+    }
+}
