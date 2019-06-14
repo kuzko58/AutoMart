@@ -33,7 +33,7 @@
   "bugs": {
     "url": "https://github.com/kuzko58/AutoMart/issues"
   },
-  "homepage": "https://github.com/kuzko58/AutoMart#readme",
+  "homepage": "https://github.com/kuzko58/AutoMart/Server#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "debug": "^4.1.1",
