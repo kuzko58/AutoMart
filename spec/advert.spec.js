@@ -1,8 +1,8 @@
 /* eslint-env jasmine */
 import Request from 'request';
 // import debug from 'debug';
-import Server from '../src/server';
-import storage from '../storage';
+import Server from '../Server/src/server';
+import storage from '../Server/storage';
 
 const start = () => Server;
 start();

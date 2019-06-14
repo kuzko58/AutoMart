@@ -1,7 +1,7 @@
 /* eslint-env jasmine */
 import Request from 'request';
 // import debug from 'debug';
-import Server from '../src/server';
+import Server from '../Server/src/server';
 
 const start = () => Server;
 start();
