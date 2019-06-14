@@ -72,6 +72,6 @@ describe('update order price offer', () => {
     expect(data.status).toBe(202);
   });
   it('response object', () => {
-    expect(data.body.new_price_offer).toBe(13000000);
+    expect(data.body.new_price_offer).toEqual(13000000);
   });
 });

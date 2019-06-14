@@ -217,7 +217,7 @@ describe('update advert price', () => {
     expect(data.status).toBe(202);
   });
   it('response object', () => {
-    expect(data.body.price).toBe(14000000);
+    expect(data.body.price).toEqual(14000000);
   });
 });
 describe('deleting an advert', () => {

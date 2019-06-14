@@ -13,8 +13,8 @@ router.post('/order/', orders.createNewOrder);
 router.post('/flag/', flags.createNewFlag);
 
 router.patch('/order/:orderId/price', orders.updateOrderPrice);
-router.patch('/advert/:advertId/status', adverts.updateAdvertStatus);
-router.patch('/advert/:advertId/price', adverts.updateAdvertPrice);
+router.patch('/advert/:advertId/status', adverts.updateAdvert);
+router.patch('/advert/:advertId/price', adverts.updateAdvert);
 
 router.get('/advert/:advertId', adverts.getSpecificAdvert);
 router.get('/advert', adverts.getFilteredAdverts);

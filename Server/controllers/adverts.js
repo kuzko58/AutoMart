@@ -23,33 +23,18 @@ const adverts = {
     storage.adverts.push(Res.data);
     res.status(Res.status).json(Res.data);
   },
-  updateAdvertStatus: (req, res) => {
+  updateAdvert: (req, res) => {
     const Res = {
       status: 202,
       data: {},
     };
     const advert = storage.adverts.find(Advert => Advert.id === parseInt(req.params.advertId, 10));
     if (advert) {
-      advert.status = req.body.status;
+      Object.assign(advert, req.body);
       Object.assign(Res.data, advert);
     } else {
       Res.status = 404;
       Res.data = new Error(404, 'not  found');
-    }
-    res.status(Res.status).json(Res.data);
-  },
-  updateAdvertPrice: (req, res) => {
-    const Res = {
-      status: 202,
-      data: {},
-    };
-    const advert = storage.adverts.find(Advert => Advert.id === parseInt(req.params.advertId, 10));
-    if (advert) {
-      advert.price = req.body.price;
-      Object.assign(Res.data, advert);
-    } else {
-      Res.status = 404;
-      Res.data = new Error(404, 'not found');
     }
     res.status(Res.status).json(Res.data);
   },
