@@ -14,24 +14,6 @@ class Success {
   }
 }
 
-function advertFilter(arr) {
-  let filteredArr = arr[0];
-  let index = 1;
-  let result = null;
-
-  function filterEngine() {
-    if (arr.length === 0) return arr;
-    if (arr.length === 1) return filteredArr;
-    if (index === arr.length) return result;
-    result = filteredArr.filter(obj => arr[index].find(obj2 => obj.id === obj2.id));
-    filteredArr = result;
-    index += 1;
-    return filterEngine();
-  }
-  const result2 = filterEngine();
-  return result2;
-}
-
 const adverts = {
   createNewAdvert: (req, res) => {
     const Res = {
@@ -90,37 +72,28 @@ const adverts = {
     else res.status(404).jason(new Error(404, 'no adverts found'));
   },
   getFilteredAdverts: (req, res) => {
-    const unFilteredAdverts = [];
+    let filteredAdverts = storage.adverts.slice();
     if (req.query.status) {
-      const allAdsForUnsoldCars = storage.adverts.filter(ad => ad.status === req.query.status);
-      unFilteredAdverts.push(allAdsForUnsoldCars);
+      filteredAdverts = filteredAdverts.filter(ad => ad.status === req.query.status);
     }
     if (req.query.body_type) {
-      const allAdsByBody = storage.adverts.filter(ad => ad.bodyType === req.query.body_type);
-      unFilteredAdverts.push(allAdsByBody);
+      filteredAdverts = filteredAdverts.filter(ad => ad.body_type === req.query.body_type);
     }
     if (req.query.brand) {
-      const allAdsByBrand = storage.adverts.filter(ad => ad.brand === req.query.brand);
-      unFilteredAdverts.push(allAdsByBrand);
+      filteredAdverts = filteredAdverts.filter(ad => ad.brand === req.query.brand);
     }
     if (req.query.condition) {
-      const allAdsByCondition = storage.adverts.filter(ad => ad.condition === req.query.condition);
-      unFilteredAdverts.push(allAdsByCondition);
+      filteredAdverts = filteredAdverts.filter(ad => ad.condition === req.query.condition);
     }
     if (req.query.min_price) {
       const reqToInt = parseInt(req.query.min_price, 10);
-      const allAdsAboveMin = storage.adverts.filter(ad => ad.price >= reqToInt);
-      unFilteredAdverts.push(allAdsAboveMin);
+      filteredAdverts = filteredAdverts.filter(ad => ad.price >= reqToInt);
     }
     if (req.query.max_price) {
       const reqToInt = parseInt(req.query.max_price, 10);
-      const allAdsBelowMax = storage.adverts.filter(ad => ad.price <= reqToInt);
-      unFilteredAdverts.push(allAdsBelowMax);
+      filteredAdverts = filteredAdverts.filter(ad => ad.price <= reqToInt);
     }
-    if (unFilteredAdverts.length && unFilteredAdverts.every(arr => arr.length > 0)) {
-      const filteredAdverts = advertFilter(unFilteredAdverts);
-      res.status(200).json(filteredAdverts);
-    } else res.status(204).json(new Error(204, 'No cars found with the specifications'));
+    res.status(200).json(filteredAdverts);
   },
   getAllUserAdverts: (req, res) => {
     const userAdverts = storage.adverts.filter(ad => ad.owner === parseInt(req.params.userId, 10));
