@@ -7,7 +7,6 @@ import storage from '../storage';
 const start = () => Server;
 start();
 
-
 describe('get specific advert', () => {
   const data = {};
   const options = {
@@ -144,42 +143,24 @@ describe('creating a new advert', () => {
   beforeAll((done) => {
     Request.post(options, (error, response) => {
       data.status = response.statusCode;
+      data.body = response.body;
       done();
     });
   });
   it('status 201', () => {
     expect(data.status).toBe(201);
   });
-  describe('check if advert was created', () => {
-    const data2 = {};
-    const options2 = {
-      url: 'http://localhost:3000/api/v1/advert/5',
-      headers: {
-        sender: 'user',
-      },
-    };
-    beforeAll((done) => {
-      Request.get(options2, (error, response, body) => {
-        data2.status = response.statusCode;
-        data2.body = body;
-        done();
-      });
-    });
-    it('status 200', () => {
-      expect(data2.status).toBe(200);
-    });
-    it('advert object', () => {
-      expect(JSON.parse(data2.body)).toEqual({
-        id: 5,
-        owner: 1,
-        created_on: '21-05-2019',
-        condition: 'New',
-        status: 'available',
-        price: 18000000,
-        manufacturer: 'Honda',
-        model: 'CR-V',
-        body_type: 'SUV',
-      });
+  it('response object', () => {
+    expect(data.body).toEqual({
+      id: 5,
+      owner: 1,
+      created_on: '21-05-2019',
+      condition: 'New',
+      status: 'available',
+      price: 18000000,
+      manufacturer: 'Honda',
+      model: 'CR-V',
+      body_type: 'SUV',
     });
   });
 });
@@ -200,31 +181,15 @@ describe('update advert status', () => {
   beforeAll((done) => {
     Request.patch(options, (error, response) => {
       data.status = response.statusCode;
+      data.body = response.body;
       done();
     });
   });
   it('status 202', () => {
     expect(data.status).toBe(202);
   });
-  describe('check if advert status was updated', () => {
-    const data2 = {};
-    const options2 = {
-      url: 'http://localhost:3000/api/v1/advert/1',
-      headers: {
-        sender: 'user',
-      },
-    };
-    beforeAll((done) => {
-      Request.get(options2, (error, response, body) => {
-        data2.status = response.statusCode;
-        data2.body = body;
-        done();
-      });
-    });
-    it('status 200', () => {
-      expect(data2.status).toBe(200);
-      expect(JSON.parse(data2.body).status).toBe('sold');
-    });
+  it('response object', () => {
+    expect(data.body.status).toBe('sold');
   });
 });
 
@@ -244,34 +209,17 @@ describe('update advert price', () => {
   beforeAll((done) => {
     Request.patch(options, (error, response) => {
       data.status = response.statusCode;
+      data.body = response.body;
       done();
     });
   });
   it('status 202', () => {
     expect(data.status).toBe(202);
   });
-  describe('check if advert price was updated', () => {
-    const data2 = {};
-    const options2 = {
-      url: 'http://localhost:3000/api/v1/advert/1',
-      headers: {
-        sender: 'user',
-      },
-    };
-    beforeAll((done) => {
-      Request.get(options2, (error, response, body) => {
-        data2.status = response.statusCode;
-        data2.body = body;
-        done();
-      });
-    });
-    it('status 200', () => {
-      expect(data2.status).toBe(200);
-      expect(JSON.parse(data2.body).price).toBe(14000000);
-    });
+  it('response object', () => {
+    expect(data.body.price).toBe(14000000);
   });
 });
-
 describe('deleting an advert', () => {
   const data = {};
   const options = {
@@ -283,29 +231,14 @@ describe('deleting an advert', () => {
   beforeAll((done) => {
     Request.delete(options, (error, response) => {
       data.status = response.statusCode;
+      data.body = response.body;
       done();
     });
   });
   it('status 200', () => {
     expect(data.status).toBe(200);
   });
-  describe('check if advert was deleted', () => {
-    const data2 = {};
-    const options2 = {
-      url: 'http://localhost:3000/api/v1/advert/2',
-      headers: {
-        sender: 'user',
-      },
-    };
-    beforeAll((done) => {
-      Request.get(options2, (error, response, body) => {
-        data2.status = response.statusCode;
-        data2.body = body;
-        done();
-      });
-    });
-    it('status 404', () => {
-      expect(data2.status).toBe(404);
-    });
+  it('response object', () => {
+    expect(JSON.parse(data.body).status).toBe(200);
   });
 });
