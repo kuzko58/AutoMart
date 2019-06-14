@@ -18,14 +18,14 @@ const orders = {
   },
   updateOrderPrice: (req, res) => {
     const Res = {
-      status: 200,
+      status: 202,
       data: { last_modified: new Date() },
     };
     const order = storage.orders.find(Order => Order.id === parseInt(req.params.orderId, 10));
     if (order) {
       if (order.status === 'pending') {
-        order.old_Price_offer = order.price_offer;
-        order.new_Price_offer = req.body.price_offer;
+        order.old_price_offer = order.price_offer;
+        order.new_price_offer = req.body.price_offer;
         delete order.price_offer;
         Object.assign(Res.data, order);
       } else {

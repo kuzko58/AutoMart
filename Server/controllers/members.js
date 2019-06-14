@@ -27,12 +27,12 @@ const members = {
   },
   logInUser: (req, res) => {
     const Res = {
-      status: 200,
+      status: 202,
       data: {
         token: '45erkjherht45495783',
       },
     };
-    const user = storage.users.find(UseR => UseR.email === req.body.email);
+    const user = storage.users.find(User => User.email === req.body.email);
     if (user) {
       if (user.password === req.body.password) Res.data = Object.assign(Res.data, user);
       else {
