@@ -1,5 +1,5 @@
 # AutoMart (Develop)
-[![Build Status](https://travis-ci.org/kuzko58/AutoMart.svg?branch=develop)](https://travis-ci.org/kuzko58/AutoMart)
+[![Build Status](https://travis-ci.com/kuzko58/AutoMart.svg?branch=develop)](https://travis-ci.com/kuzko58/AutoMart)
 [![Coverage Status](https://coveralls.io/repos/github/kuzko58/AutoMart/badge.svg?branch=develop)](https://coveralls.io/github/kuzko58/AutoMart?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b94eaeaf0362453ef9ea/maintainability)](https://codeclimate.com/github/kuzko58/AutoMart/maintainability)
 
