@@ -4,10 +4,10 @@
   "main": "server.js",
   "scripts": {
     "test-init": "node node_modules/jasmine/bin/jasmine init",
-    "test-jasmine": "babel-node spec/run.js",
+    "test-jasmine": "babel-node Server/spec/run.js",
     "test": "nyc jasmine",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "start": "nodemon --exec babel-node src/server.js",
+    "start": "nodemon --exec babel-node Server/src/server.js",
     "build": "babel src --out-dir dist"
   },
   "nyc": {
@@ -33,11 +33,13 @@
   "bugs": {
     "url": "https://github.com/kuzko58/AutoMart/issues"
   },
-  "homepage": "https://github.com/kuzko58/AutoMart/Server#readme",
+  "homepage": "https://github.com/kuzko58/AutoMart#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "debug": "^4.1.1",
     "express": "^4.17.1",
+    "jasmine": "^3.4.0",
+    "jasmine-core": "^3.4.0",
     "morgan": "^1.9.1",
     "request": "^2.88.0"
   },
@@ -57,8 +59,6 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.3",
-    "jasmine": "^3.4.0",
-    "jasmine-core": "^3.4.0",
     "mocha": "^6.1.4",
     "nodemon": "^1.19.1",
     "nyc": "^14.1.1",

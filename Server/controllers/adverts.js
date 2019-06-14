@@ -77,7 +77,7 @@ const adverts = {
       filteredAdverts = filteredAdverts.filter(ad => ad.status === req.query.status);
     }
     if (req.query.body_type) {
-      filteredAdverts = filteredAdverts.filter(ad => ad.body_type === req.query.body_type);
+      filteredAdverts = filteredAdverts.filter(ad => ad.bodyType === req.query.body_type);
     }
     if (req.query.brand) {
       filteredAdverts = filteredAdverts.filter(ad => ad.brand === req.query.brand);
