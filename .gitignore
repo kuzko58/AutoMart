@@ -63,3 +63,5 @@ typings/
 # vscode config
 .vscode
 
+# dist dir for node server
+dist
