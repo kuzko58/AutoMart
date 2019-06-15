@@ -12,7 +12,7 @@ app.use(logger('dev'));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('Hello world!');
+  res.send(JSON.stringify('Hello world!'));
 });
 
 app.use('/api/v1', (req, res) => {
