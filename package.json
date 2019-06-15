@@ -26,7 +26,8 @@
     "url": "git+https://github.com/kuzko58/AutoMart.git"
   },
   "keywords": [
-    "api"
+    "api",
+    "heroku"
   ],
   "author": "Amaechi Chisom",
   "license": "ISC",
@@ -63,6 +64,9 @@
     "nodemon": "^1.19.1",
     "nyc": "^14.1.1",
     "regenerator-runtime": "^0.13.2"
+  },
+  "engines": {
+    "node": "10.13.0"
   },
   "description": ""
 }
