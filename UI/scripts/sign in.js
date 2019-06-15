@@ -1,6 +1,6 @@
 import {
     main
-} from '/scripts/main.js';
+} from './main.js';
 
 function switchTab(x, y, a, b) {
     y.style.color = 'lightgray';
