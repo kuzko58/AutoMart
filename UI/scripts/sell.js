@@ -1,13 +1,13 @@
 import {
     main
-} from '/scripts/main.js';
+} from './main.js';
 import {
     bodyTypeArr,
     allStates,
     manuYearArrFunc,
     vehicle,
     carModel
-} from '/scripts/storage.js';
+} from './storage.js';
 
 function addOption(arr, elemId) {
     document.getElementById(elemId).length = 1;
