@@ -1,6 +1,6 @@
 import {
     main
-} from '/scripts/main.js';
+} from './main.js';
 import {
     bodyTypeArr,
     priceRangeArr,
@@ -8,7 +8,7 @@ import {
     manuYearArrFunc,
     vehicle,
     carModel
-} from '/scripts/storage.js';
+} from './storage.js';
 
 
 function addOption(arr, elemId) {
