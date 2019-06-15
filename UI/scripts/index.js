@@ -1,13 +1,13 @@
 import {
     main
-} from '/scripts/main.js';
+} from './main.js';
 import {
     latestDeals
-} from '/scripts/storage.js';
+} from './storage.js';
 import {
     createNewElem,
     createNewImage
-} from '/scripts/func-lib.js';
+} from './func-lib.js';
 
 const [getStarted, existingUser] = [document.getElementById('getStarted'), document.getElementById('existingUser')];
 const adContainerPartitionHolder = document.getElementById('adContainerPartitionHolder');
