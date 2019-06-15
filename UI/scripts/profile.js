@@ -1,6 +1,6 @@
 /*import {
     main
-} from '/scripts/main.js';*/
+} from './main.js';*/
 const [profileInfo, profilePosts, profileOffers, profileSettings] = [document.getElementById('profileInfo'), document.getElementById('profilePosts'), document.getElementById('profileOffers'), document.getElementById('profileSettings')];
 const [profileInfoBody, profilePostsBody, profileOffersBody, profileSettingsBody] = [document.getElementById('profileInfoBody'), document.getElementById('profilePostsBody'), document.getElementById('profileOffersBody'), document.getElementById('profileSettingsBody')];
 const [sentOffers, recievedOffers] = [document.getElementById('sentOffers'), document.getElementById('recievedOffers')];
