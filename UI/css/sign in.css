@@ -43,8 +43,6 @@
     height: auto;
     width: 100%;
     min-height: 80vh;
-    padding: 2px;
-    box-sizing: border-box;
 }
 
 .form-one-box {

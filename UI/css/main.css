@@ -264,9 +264,8 @@ header {
     height: auto;
     width: 100%;
     font-size: 1em;
-    background-color: white;
     background-color: rgb(253, 253, 253);
-    padding: 2px;
+    padding: 0px;
     box-sizing: border-box;
     border: 1px solid gainsboro;
     box-shadow: 2px 0px 4px rgba(128, 128, 128, .1), -2px 0px 4px rgba(128, 128, 128, .1);
