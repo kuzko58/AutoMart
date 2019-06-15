@@ -7,8 +7,9 @@
     "test-jasmine": "babel-node Server/spec/run.js",
     "test": "nyc jasmine",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "start": "nodemon --exec babel-node Server/src/server.js",
-    "build": "babel src --out-dir dist"
+    "start-dev": "nodemon --exec babel-node Server/src/server.js",
+    "start": "nodemon --exec babel-node dist/src/server.js",
+    "build": "babel Server -d dist"
   },
   "nyc": {
     "require": [
