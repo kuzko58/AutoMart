@@ -1,168 +1,189 @@
 @import url('main.css');
+
 @font-face {
-    font-family: 'proxima Condensed Bold';
-    src: url('fonts/Proxima Nova ScOsf Condensed Bold.otf');
+  font-family: 'proxima Condensed Bold';
+  src: url('fonts/Proxima Nova ScOsf Condensed Bold.otf');
 }
 
 @font-face {
-    font-family: 'proxima thin';
-    src: url('fonts/Proxima Nova ScOsf Thin.otf');
+  font-family: 'proxima thin';
+  src: url('fonts/Proxima Nova ScOsf Thin.otf');
 }
 
 @font-face {
-    font-family: 'proxima Alt Condensed Extrabold Italic';
-    src: url('fonts/Mark Simonson - Proxima Nova Alt Condensed Extrabold Italic.otf');
+  font-family: 'proxima Alt Condensed Extrabold Italic';
+  src: url('fonts/Mark Simonson - Proxima Nova Alt Condensed Extrabold Italic.otf');
 }
 
 @font-face {
-    font-family: 'proxima Alt Regular';
-    src: url('fonts/Mark Simonson - Proxima Nova Alt Regular.otf');
+  font-family: 'proxima Alt Regular';
+  src: url('fonts/Mark Simonson - Proxima Nova Alt Regular.otf');
 }
 
 @font-face {
-    font-family: 'Proxima Nova Regular';
-    src: url('fonts/Mark Simonson - Proxima Nova Regular.otf');
+  font-family: 'Proxima Nova Regular';
+  src: url('fonts/Mark Simonson - Proxima Nova Regular.otf');
 }
 
 @font-face {
-    font-family: 'Proxima Nova ScOsf Condensed Regular';
-    src: url('fonts/Mark Simonson - Proxima Nova ScOsf Condensed Regular.otf');
+  font-family: 'Proxima Nova ScOsf Condensed Regular';
+  src: url('fonts/Mark Simonson - Proxima Nova ScOsf Condensed Regular.otf');
 }
 
 @font-face {
-    font-family: 'Proxima Nova ScOsf Regular';
-    src: url('fonts/Proxima Nova ScOsf Regular.otf');
+  font-family: 'Proxima Nova ScOsf Regular';
+  src: url('fonts/Proxima Nova ScOsf Regular.otf');
 }
 
 .container {
-    position: relative;
-    top: 88px;
-    min-height: 80vh;
-    box-sizing: border-box;
+  position: relative;
+  top: 88px;
+  min-height: 80vh;
+  box-sizing: border-box;
+  background-color: white;
+  box-shadow: none;
+  border: 1px solid transparent;
 }
 
 .parameter-box {
-    position: relative;
-    width: calc(100% - 10px);
-    margin: 5px;
-    font-family: 'proxima thin';
-    font-size: 1em;
-    color: darkslategray;
-    background-color: white;
-    border-radius: 4px;
-    padding: 10px 0px;
-    box-sizing: border-box;
-    border: 1px solid whitesmoke;
+  position: relative;
+  width: calc(100% - 10px);
+  margin: 5px;
+  font-family: 'proxima thin';
+  font-size: 1em;
+  color: black;
+  background-color: white;
+  border-radius: 4px;
+  padding: 10px 0px;
+  box-sizing: border-box;
 }
 
 .parameter-box-sections {
-    width: calc(100% - 10px);
-    margin: 10px auto;
-    text-align: left;
-    padding: 10px;
-    box-sizing: border-box;
+  width: calc(100% - 10px);
+  margin: 10px auto;
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: indianred;
-    font-family: 'proxima thin';
-    width: 100%;
-    background-color: white;
-    border-bottom: 1px solid whitesmoke;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: indianred;
+  font-family: 'proxima thin';
+  font-size: 1em;
+  width: 100%;
+  background-color: white;
 }
 
 .parameter-box-sections select {
-    width: 100px;
-    background-color: white;
-    color: slategray;
-    font-family: 'Proxima Nova Regular';
-    border: 1px solid lightgray;
-    border-radius: 4px;
-    padding: 5px;
-    box-sizing: border-box;
-    outline: none;
-    box-shadow: 0px 2px 4px rgba(128, 128, 128, .1);
+  width: 100px;
+  background-color: white;
+  color: slategray;
+  font-family: 'Proxima Nova Regular';
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  padding: 5px;
+  box-sizing: border-box;
+  outline: none;
+  box-shadow: 0px 2px 4px rgba(128, 128, 128, .1);
 }
 
 .section-one select:nth-child(4) {
-    width: 150px;
+  width: 200px;
 }
 
 .section-one select:nth-child(6) {
-    width: 150px;
+  width: 200px;
 }
 
 .section-two select:nth-child(2) {
-    width: 150px;
+  width: 150px;
 }
 
 .section-two input:nth-child(4) {
-    width: 200px;
+  width: 200px;
 }
 
 .section-two select:nth-child(6) {
-    width: 200px;
+  width: 200px;
 }
 
 .section-three select:nth-child(2) {
-    width: 200px;
+  width: 200px;
 }
 
 .section-three input:nth-child(4) {
-    width: 200px;
+  width: 200px;
 }
 
-.section-three textarea:nth-child(6) {
-    width: 250px;
+.file-upload-box {
+  width: 200px;
+  margin: 2px auto;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .comment-box {
-    width: 80%;
-    min-width: 250px;
-    max-width: 400px;
-    min-height: 150px;
-    font-size: 0.875em;
-    border-radius: 4px;
-    padding: 2px;
-    box-sizing: border-box;
+  width: 100%;
+  min-width: 250px;
+  max-width: 500px;
+  min-height: 150px;
+  font-size: 1em;
+  border-radius: 4px;
+  padding: 2px;
+  box-sizing: border-box;
 }
 
 .comment-box:hover {
-    cursor: text;
+  cursor: text;
 }
 
 .section-four button {
-    background-color: firebrick;
-    color: white;
-    border: 1px solid gray;
+  background-color: firebrick;
+  color: white;
+  border: 1px solid gray;
 }
 
 .section-four button:hover {
-    background-color: maroon;
+  background-color: maroon;
 }
 
 footer {
-    top: 86px;
+  top: 86px;
 }
 
 @media only screen and (min-width: 768px) {
-    .container {
-        top: 108px;
-    }
-    .comment-box {
-        min-width: 400px;
-        min-height: 250px;
-    }
-    footer {
-        top: 106px;
-    }
+  .container {
+    top: 108px;
+    border: 1px solid lightgray;
+    box-shadow: 2px 0px 4px rgba(128, 128, 128, .1), -2px 0px 4px rgba(128, 128, 128, .1);
+  }
+
+  .comment-box {
+    min-width: 400px;
+    min-height: 250px;
+  }
+
+  footer {
+    top: 106px;
+  }
 }
 
 @media only screen and (min-width: 1280px) {
-    .section-header {
-        justify-content: flex-start;
-    }
+  .parameter-box-sections {
+    text-align: left;
+  }
+
+  .section-header {
+    justify-content: flex-start;
+  }
+
+  .file-upload-box {
+    width: 200px;
+    margin: 2px 0px;
+    padding: 0px;
+    box-sizing: border-box;
+  }
 }
