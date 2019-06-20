@@ -31,6 +31,18 @@ const storage = {
     model: 'Avalon',
     body_type: 'Sedan',
 
+  },
+  {
+    id: 3,
+    owner: 1,
+    created_on: '',
+    condition: 'New',
+    status: 'available',
+    price: 10200000,
+    brand: 'Toyota',
+    model: 'Camry',
+    body_type: 'Sedan',
+
   }],
   orders: [{
     created_on: '',

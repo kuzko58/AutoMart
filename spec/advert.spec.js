@@ -30,25 +30,28 @@ describe('get specific advert', () => {
   });
 });
 
-describe('get nonexistent advert', () => {
-  const data = {};
-  const options = {
-    url: 'http://localhost:3000/api/v1/adverts/003',
-    headers: {
-      sender: 'user',
-    },
-  };
-  beforeAll((done) => {
-    Request.get(options, (error, response, body) => {
-      data.status = response.statusCode;
-      data.body = body;
-      done();
+const getNonExistingItem = (addr, sentBy) => {
+  describe('get non-existent advert', () => {
+    const data = {};
+    const options = {
+      url: addr,
+      headers: {
+        sender: sentBy,
+      },
+    };
+    beforeAll((done) => {
+      Request.get(options, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('status 404', () => {
+      expect(data.status).toBe(404);
     });
   });
-  it('status 404', () => {
-    expect(data.status).toBe(404);
-  });
-});
+};
+getNonExistingItem('http://localhost:3000/api/v1/adverts/003', 'user');
 
 describe('get all adverts', () => {
   const data = {};
@@ -96,28 +99,35 @@ describe('get all user adverts', () => {
   });
 });
 
-describe('get adverts by filter', () => {
-  const data = {};
-  const options = {
-    url: 'http://localhost:3000/api/v1/advert?status=available',
-    headers: {
-      sender: 'user',
-    },
-  };
-  beforeAll((done) => {
-    Request.get(options, (error, response, body) => {
-      data.status = response.statusCode;
-      data.body = body;
-      done();
+const queryStringTest = (addr, sentBy, parameter) => {
+  describe('get adverts by filter(status)', () => {
+    const data = {};
+    const options = {
+      url: addr,
+      headers: {
+        sender: sentBy,
+      },
+    };
+    beforeAll((done) => {
+      Request.get(options, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('status 200', () => {
+      expect(data.status).toBe(200);
+    });
+    it('array of all filtered adverts', () => {
+      expect(JSON.parse(data.body).every(obj => obj.status === parameter)).toBe(true);
     });
   });
-  it('status 200', () => {
-    expect(data.status).toBe(200);
-  });
-  it('array of all filtered adverts', () => {
-    expect(JSON.parse(data.body).every(obj => obj.status === 'available')).toBe(true);
-  });
-});
+};
+
+queryStringTest('http://localhost:3000/api/v1/advert?status=available&condition=new', 'user', 'available');
+queryStringTest('http://localhost:3000/api/v1/advert?status=available&condition=used', 'user', 'available');
+queryStringTest('http://localhost:3000/api/v1/advert?status=available', 'user', 'available');
+queryStringTest('http://localhost:3000/api/v1/advert?body_type=sedan', 'user', 'body_type');
 
 describe('creating a new advert', () => {
   const data = {};
@@ -193,6 +203,31 @@ describe('update advert status', () => {
   });
 });
 
+describe('update non-existent advert status', () => {
+  const data = {};
+  const options = {
+    url: 'http://localhost:3000/api/v1/advert/00123/status',
+    json: true,
+    method: 'patch',
+    headers: {
+      sender: 'user',
+    },
+    body: {
+      status: 'sold',
+    },
+  };
+  beforeAll((done) => {
+    Request.patch(options, (error, response) => {
+      data.status = response.statusCode;
+      data.body = response.body;
+      done();
+    });
+  });
+  it('status 404', () => {
+    expect(data.status).toBe(404);
+  });
+});
+
 describe('update advert price', () => {
   const data = {};
   const options = {
@@ -240,5 +275,25 @@ describe('deleting an advert', () => {
   });
   it('response object', () => {
     expect(JSON.parse(data.body).status).toBe(200);
+  });
+});
+
+describe('deleting non-existent advert', () => {
+  const data = {};
+  const options = {
+    url: 'http://localhost:3000/api/v1/advert/00123',
+    headers: {
+      sender: 'admin',
+    },
+  };
+  beforeAll((done) => {
+    Request.patch(options, (error, response) => {
+      data.status = response.statusCode;
+      data.body = response.body;
+      done();
+    });
+  });
+  it('status 404', () => {
+    expect(data.status).toBe(404);
   });
 });
