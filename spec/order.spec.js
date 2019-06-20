@@ -75,3 +75,53 @@ describe('update order price offer', () => {
     expect(data.body.new_price_offer).toEqual(13000000);
   });
 });
+
+describe('update non-existent order price offer', () => {
+  const data = {};
+  const options = {
+    url: 'http://localhost:3000/api/v1/order/34/price',
+    json: true,
+    method: 'patch',
+    headers: {
+      sender: 'user',
+    },
+    body: {
+      price_offer: 13000000,
+    },
+  };
+  beforeAll((done) => {
+    Request.patch(options, (error, response) => {
+      data.status = response.statusCode;
+      data.body = response.body;
+      done();
+    });
+  });
+  it('status 404', () => {
+    expect(data.status).toBe(404);
+  });
+});
+
+describe('update a non-pending order price offer', () => {
+  const data = {};
+  const options = {
+    url: 'http://localhost:3000/api/v1/order/5/price',
+    json: true,
+    method: 'patch',
+    headers: {
+      sender: 'user',
+    },
+    body: {
+      price_offer: 13000000,
+    },
+  };
+  beforeAll((done) => {
+    Request.patch(options, (error, response) => {
+      data.status = response.statusCode;
+      data.body = response.body;
+      done();
+    });
+  });
+  it('status 405', () => {
+    expect(data.status).toBe(405);
+  });
+});

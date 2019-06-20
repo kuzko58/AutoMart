@@ -40,6 +40,15 @@ const storage = {
     price: 13700000,
     price_offer: 11000000,
     status: 'pending',
+  },
+  {
+    created_on: '',
+    id: 5,
+    buyer: 2,
+    carId: 1,
+    price: 13700000,
+    price_offer: 11000000,
+    status: 'rejeted',
   }],
   flags: [{
     id: 1,
