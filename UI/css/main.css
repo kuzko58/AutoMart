@@ -555,7 +555,7 @@ footer {
 .opacity-effect-in {
   animation-name: opacity-effect-in;
   animation-duration: 400ms;
-  animation-timing-function: ease-out;
+  animation-timing-function: ease-in;
 }
 
 @keyframes opacity-effect-in {
@@ -563,7 +563,7 @@ footer {
     opacity: 0;
   }
 
-  50% {
+  80% {
     opacity: 1;
   }
 
@@ -575,7 +575,7 @@ footer {
 .opacity-effect-out {
   animation-name: opacity-effect-out;
   animation-duration: 400ms;
-  animation-timing-function: ease-in;
+  animation-timing-function: ease-out;
 }
 
 @keyframes opacity-effect-out {
@@ -583,7 +583,7 @@ footer {
     opacity: 1;
   }
 
-  90% {
+  60% {
     opacity: 1;
   }
 
