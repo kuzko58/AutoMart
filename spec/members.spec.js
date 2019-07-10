@@ -1,22 +1,31 @@
 /* eslint-env jasmine */
 import Request from 'request';
-// import debug from 'debug';
+import jwt from 'jsonwebtoken';
 import Server from '../Server/src/server';
+import auth from '../Server/middlewares/authentication';
 
 const start = () => Server;
 start();
 
+const genToken = auth.generateToken;
+const Admin = {
+    email: 'kuzko584@gmail.com',
+    firstName: 'Chisom',
+    lastName: 'Amaechi',
+    password: 'mypassword',
+    address: 'Lagos',
+    isAdmin: true,
+  }
+
+const token = jwt.sign(Admin, process.env.secret_key)
+
 describe('creating a new user', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/auth/signup',
+    url: 'http://localhost:5840/api/v1/auth/signup',
     json: true,
     method: 'post',
-    headers: {
-      sender: 'user',
-    },
     body: {
-      id: 10,
       email: 'johndoe2@example.com',
       firstName: 'John',
       lastName: 'Doe',
@@ -36,29 +45,20 @@ describe('creating a new user', () => {
     expect(data.status).toBe(201);
   });
   it('response body', () => {
-    expect(data.body).toEqual({
-      id: 10,
-      email: 'johndoe2@example.com',
-      firstName: 'John',
-      lastName: 'Doe',
-      password: 'Password',
-      address: 'Lagos',
-      isAdmin: false,
-    });
+    expect(data.body.email).toBe('johndoe2@example.com');
   });
 });
 
 describe('creating an already existing user', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/auth/signup',
+    url: 'http://localhost:5840/api/v1/auth/signup',
     json: true,
     method: 'post',
     headers: {
       sender: 'user',
     },
     body: {
-      id: 10,
       email: 'johndoe@example.com',
       firstName: 'John',
       lastName: 'Doe',
@@ -82,12 +82,9 @@ describe('creating an already existing user', () => {
 describe('login a user', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/auth/signin',
+    url: 'http://localhost:5840/api/v1/auth/signin',
     json: true,
     method: 'post',
-    headers: {
-      sender: 'user',
-    },
     body: {
       email: 'johndoe@example.com',
       password: 'Password',
@@ -104,27 +101,16 @@ describe('login a user', () => {
     expect(data.status).toBe(202);
   });
   it('response body', () => {
-    expect(data.body).toEqual({
-      id: 2,
-      email: 'johndoe@example.com',
-      firstName: 'John',
-      lastName: 'Doe',
-      password: 'Password',
-      address: 'Lagos',
-      isAdmin: false,
-    });
+    expect(data.body.email).toBe('johndoe@example.com');
   });
 });
 
 describe('login a user with wrong email', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/auth/signin',
+    url: 'http://localhost:5840/api/v1/auth/signin',
     json: true,
     method: 'post',
-    headers: {
-      sender: 'user',
-    },
     body: {
       email: 'johndoe25@example.com',
       password: 'Password',
@@ -145,12 +131,9 @@ describe('login a user with wrong email', () => {
 describe('login a user with wrong password', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/auth/signin',
+    url: 'http://localhost:5840/api/v1/auth/signin',
     json: true,
     method: 'post',
-    headers: {
-      sender: 'user',
-    },
     body: {
       email: 'johndoe@example.com',
       password: 'Password2',
