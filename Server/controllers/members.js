@@ -1,4 +1,8 @@
+import bcrypt from 'bcrypt';
 import storage from '../storage';
+import auth from '../middlewares/authentication';
+
+const saltRounds = 10;
 
 class Error {
   constructor(status, message) {
@@ -12,15 +16,23 @@ const members = {
     const user = storage.users.find(User => User.email === req.body.email);
     if (user) res.status(409).json(new Error(409, 'User already exists'));
     else {
-      storage.users.push(req.body);
-      res.status(201).json(req.body);
+      bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+        req.body.password = hash;
+        storage.users.push(req.body);
+        auth.generateToken(req.body)
+          .then(resolved => res.status(201).json(resolved));
+      });
     }
   },
   logInUser: (req, res) => {
     const user = storage.users.find(User => User.email === req.body.email);
     if (user) {
-      if (user.password === req.body.password) res.status(202).json(user);
-      else res.status(401).json(new Error(401, 'email and password do not match'));
+      bcrypt.compare(req.body.password, user.password, (err, result) => {
+        if (result) {
+          auth.generateToken(user)
+            .then(resolved => res.status(200).json(resolved));
+        } else res.status(401).json(new Error(401, 'email and password do not match'));
+      });
     } else res.status(404).json(new Error(404, 'User does not exist'));
   },
 };

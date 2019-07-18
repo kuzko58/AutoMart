@@ -1,9 +1,10 @@
 import express from 'express';
 import logger from 'morgan';
 import Debug from 'debug';
+import 'dotenv/config';
 
 import usersRouter from '../Routes/users';
-import adminRouter from '../Routes/admin';
+// import adminRouter from '../Routes/admin';
 
 const debug = Debug('AutoMart');
 const app = express();
@@ -16,14 +17,15 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1', (req, res) => {
-  const sender = req.get('sender');
-  if (sender === 'user') {
+  usersRouter(req, res);
+  /* const sender = req.get('sender');
+    if (sender === 'user') {
     usersRouter(req, res);
   } else if (sender === 'admin') {
     adminRouter(req, res);
   } else {
     res.send('something went wrong');
-  }
+  } */
 });
 
 const port = process.env.PORT || 3000;
