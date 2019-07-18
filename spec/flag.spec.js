@@ -64,7 +64,7 @@ describe('Flags Tests', () => {
     beforeAll((done) => {
       Request.post(options, (error, response) => {
         data.status = response.statusCode;
-        data.body = response.body;
+        data.body = response.body.data;
         done();
       });
     });

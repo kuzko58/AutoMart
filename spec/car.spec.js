@@ -54,7 +54,8 @@ describe('Cars Tests', () => {
     beforeAll((done) => {
       Request.get(options, (error, response, body) => {
         data.status = response.statusCode;
-        data.body = body;
+        const Body = JSON.parse(body);
+        data.body = Body.data;
         done();
       });
     });
@@ -62,8 +63,7 @@ describe('Cars Tests', () => {
       expect(data.status).toBe(200);
     });
     it('an advert object', () => {
-      const Data = JSON.parse(data.body);
-      expect(Data.id).toBe(1);
+      expect(data.body.id).toBe(1);
     });
   });
 
@@ -76,7 +76,8 @@ describe('Cars Tests', () => {
       beforeAll((done) => {
         Request.get(options, (error, response, body) => {
           data.status = response.statusCode;
-          data.body = body;
+          const Body = JSON.parse(body);
+          data.body = Body.data;
           done();
         });
       });
@@ -95,7 +96,8 @@ describe('Cars Tests', () => {
     beforeAll((done) => {
       Request.get(options, (error, response, body) => {
         data.status = response.statusCode;
-        data.body = body;
+        const Body = JSON.parse(body);
+        data.body = Body.data;
         done();
       });
     });
@@ -103,9 +105,8 @@ describe('Cars Tests', () => {
       expect(data.status).toBe(200);
     });
     it('array of all cars', () => {
-      const Data = JSON.parse(data.body);
       const isArray = value => value && typeof value === 'object' && value.constructor === Array;
-      expect(isArray(Data)).toBe(true);
+      expect(isArray(data.body)).toBe(true);
     });
   });
 
@@ -120,7 +121,8 @@ describe('Cars Tests', () => {
     beforeAll((done) => {
       Request.get(options, (error, response, body) => {
         data.status = response.statusCode;
-        data.body = body;
+        const Body = JSON.parse(body);
+        data.body = Body.data;
         done();
       });
     });
@@ -128,8 +130,7 @@ describe('Cars Tests', () => {
       expect(data.status).toBe(200);
     });
     it('array of all user cars', () => {
-      const Data = JSON.parse(data.body);
-      expect(Data.every(obj => obj.owner === 1)).toBe(true);
+      expect(data.body.every(obj => obj.owner === 1)).toBe(true);
     });
   });
 
@@ -142,7 +143,8 @@ describe('Cars Tests', () => {
       beforeAll((done) => {
         Request.get(options, (error, response, body) => {
           data.status = response.statusCode;
-          data.body = body;
+          const Body = JSON.parse(body);
+          data.body = Body.data;
           done();
         });
       });
@@ -150,8 +152,7 @@ describe('Cars Tests', () => {
         expect(data.status).toBe(200);
       });
       it('array of all filtered cars', () => {
-        const Data = JSON.parse(data.body);
-        expect(Data.every(obj => obj[key] === parameter)).toBe(true);
+        expect(data.body.every(obj => obj[key] === parameter)).toBe(true);
       });
     });
   };
@@ -184,7 +185,7 @@ describe('Cars Tests', () => {
     beforeAll((done) => {
       Request.post(options, (error, response) => {
         data.status = response.statusCode;
-        data.body = response.body;
+        data.body = response.body.data;
         done();
       });
     });
@@ -221,7 +222,7 @@ describe('Cars Tests', () => {
     beforeAll((done) => {
       Request.patch(options, (error, response) => {
         data.status = response.statusCode;
-        data.body = response.body;
+        data.body = response.body.data;
         done();
       });
     });
@@ -249,7 +250,7 @@ describe('Cars Tests', () => {
     beforeAll((done) => {
       Request.patch(options, (error, response) => {
         data.status = response.statusCode;
-        data.body = response.body;
+        data.body = response.body.data;
         done();
       });
     });
@@ -274,7 +275,7 @@ describe('Cars Tests', () => {
     beforeAll((done) => {
       Request.patch(options, (error, response) => {
         data.status = response.statusCode;
-        data.body = response.body;
+        data.body = response.body.data;
         done();
       });
     });
@@ -297,7 +298,7 @@ describe('Cars Tests', () => {
     beforeAll((done) => {
       Request.delete(options, (error, response) => {
         data.status = response.statusCode;
-        data.body = response.body;
+        data.body = response.body.data;
         done();
       });
     });
@@ -317,7 +318,7 @@ describe('Cars Tests', () => {
     beforeAll((done) => {
       Request.patch(options, (error, response) => {
         data.status = response.statusCode;
-        data.body = response.body;
+        data.body = response.body.data;
         done();
       });
     });
