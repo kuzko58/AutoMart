@@ -1,23 +1,34 @@
 /* eslint-env jasmine */
 import Request from 'request';
-// import debug from 'debug';
+import jwt from 'jsonwebtoken';
 import Server from '../Server/src/server';
+import auth from '../Server/middlewares/authentication';
 
 const start = () => Server;
 start();
 
-describe('creating a new order', () => {
+const genToken = auth.generateToken;
+const Admin = {
+    email: 'kuzko584@gmail.com',
+    firstName: 'Chisom',
+    lastName: 'Amaechi',
+    password: 'mypassword',
+    address: 'Lagos',
+    isAdmin: true,
+  }
+
+const token = jwt.sign(Admin, process.env.secret_key)
+
+describe('creating a new flag', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/flag/',
+    url: 'http://localhost:5840/api/v1/flag/',
     json: true,
     method: 'post',
     headers: {
-      sender: 'user',
+      authorization: `bearer ${token}`,
     },
     body: {
-      created_on: '',
-      id: 2,
       carId: 1,
       reason: 'fraudulent',
       description: 'String',
@@ -35,8 +46,6 @@ describe('creating a new order', () => {
   });
   it('response object', () => {
     expect(data.body).toEqual({
-      created_on: '',
-      id: 2,
       carId: 1,
       reason: 'fraudulent',
       description: 'String',

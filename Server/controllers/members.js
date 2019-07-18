@@ -3,6 +3,7 @@ import storage from '../storage';
 import auth from '../middlewares/authentication';
 
 const saltRounds = 10;
+const genToken = auth.generateToken;
 
 class Error {
   constructor(status, message) {
@@ -19,7 +20,7 @@ const members = {
       bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
         req.body.password = hash;
         storage.users.push(req.body);
-        auth.generateToken(req.body)
+        genToken(req.body)
           .then(resolved => res.status(201).json(resolved));
       });
     }
@@ -29,8 +30,8 @@ const members = {
     if (user) {
       bcrypt.compare(req.body.password, user.password, (err, result) => {
         if (result) {
-          auth.generateToken(user)
-            .then(resolved => res.status(200).json(resolved));
+          genToken(user)
+            .then(resolved => res.status(202).json(resolved));
         } else res.status(401).json(new Error(401, 'email and password do not match'));
       });
     } else res.status(404).json(new Error(404, 'User does not exist'));

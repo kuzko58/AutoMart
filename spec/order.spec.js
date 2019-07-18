@@ -1,23 +1,34 @@
 /* eslint-env jasmine */
 import Request from 'request';
-// import debug from 'debug';
+import jwt from 'jsonwebtoken';
 import Server from '../Server/src/server';
+import auth from '../Server/middlewares/authentication';
 
 const start = () => Server;
 start();
 
+const genToken = auth.generateToken;
+const Admin = {
+    email: 'kuzko584@gmail.com',
+    firstName: 'Chisom',
+    lastName: 'Amaechi',
+    password: 'mypassword',
+    address: 'Lagos',
+    isAdmin: true,
+  }
+
+const token = jwt.sign(Admin, process.env.secret_key)
+
 describe('creating a new order', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/order/',
+    url: 'http://localhost:5840/api/v1/order/',
     json: true,
     method: 'post',
     headers: {
-      sender: 'user',
+      authorization: `bearer ${token}`,
     },
     body: {
-      created_on: '',
-      id: 24,
       buyer: 2,
       carId: 1,
       price: 13700000,
@@ -37,8 +48,6 @@ describe('creating a new order', () => {
   });
   it('response object', () => {
     expect(data.body).toEqual({
-      created_on: '',
-      id: 24,
       buyer: 2,
       carId: 1,
       price: 13700000,
@@ -51,11 +60,11 @@ describe('creating a new order', () => {
 describe('update order price offer', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/order/4/price',
+    url: 'http://localhost:5840/api/v1/order/4/price',
     json: true,
     method: 'patch',
     headers: {
-      sender: 'user',
+      authorization: `bearer ${token}`,
     },
     body: {
       price_offer: 13000000,
@@ -79,11 +88,11 @@ describe('update order price offer', () => {
 describe('update non-existent order price offer', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/order/34/price',
+    url: 'http://localhost:5840/api/v1/order/34/price',
     json: true,
     method: 'patch',
     headers: {
-      sender: 'user',
+      authorization: `bearer ${token}`,
     },
     body: {
       price_offer: 13000000,
@@ -104,11 +113,11 @@ describe('update non-existent order price offer', () => {
 describe('update a non-pending order price offer', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/order/5/price',
+    url: 'http://localhost:5840/api/v1/order/5/price',
     json: true,
     method: 'patch',
     headers: {
-      sender: 'user',
+      authorization: `bearer ${token}`,
     },
     body: {
       price_offer: 13000000,

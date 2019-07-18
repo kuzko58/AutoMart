@@ -61,7 +61,7 @@ class Methods {
 }
 
 class Adverts extends Methods {
-  getFilteredAdverts(req, res) {
+  getAllAdverts(req, res) {
     let filteredAdverts = storage[this.location].slice();
     if (req.query.status) {
       filteredAdverts = filteredAdverts.filter(ad => ad.status === req.query.status);

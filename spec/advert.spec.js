@@ -1,19 +1,29 @@
 /* eslint-env jasmine */
 import Request from 'request';
-// import debug from 'debug';
+import jwt from 'jsonwebtoken';
 import Server from '../Server/src/server';
 import storage from '../Server/storage';
+import auth from '../Server/middlewares/authentication';
 
 const start = () => Server;
 start();
 
+const genToken = auth.generateToken;
+const Admin = {
+    email: 'kuzko584@gmail.com',
+    firstName: 'Chisom',
+    lastName: 'Amaechi',
+    password: 'mypassword',
+    address: 'Lagos',
+    isAdmin: true,
+  }
+
+const token = jwt.sign(Admin, process.env.secret_key)
+
 describe('get specific advert', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/advert/1',
-    headers: {
-      sender: 'user',
-    },
+    url: 'http://localhost:5840/api/v1/advert/1',
   };
   beforeAll((done) => {
     Request.get(options, (error, response, body) => {
@@ -30,14 +40,11 @@ describe('get specific advert', () => {
   });
 });
 
-const getNonExistingItem = (addr, sentBy) => {
+const getNonExistingItem = (addr) => {
   describe('get non-existent advert', () => {
     const data = {};
     const options = {
       url: addr,
-      headers: {
-        sender: sentBy,
-      },
     };
     beforeAll((done) => {
       Request.get(options, (error, response, body) => {
@@ -51,15 +58,12 @@ const getNonExistingItem = (addr, sentBy) => {
     });
   });
 };
-getNonExistingItem('http://localhost:3000/api/v1/adverts/003', 'user');
+getNonExistingItem('http://localhost:5840/api/v1/adverts/003');
 
 describe('get all adverts', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/advert/',
-    headers: {
-      sender: 'admin',
-    },
+    url: 'http://localhost:5840/api/v1/advert/',
   };
   beforeAll((done) => {
     Request.get(options, (error, response, body) => {
@@ -79,9 +83,9 @@ describe('get all adverts', () => {
 describe('get all user adverts', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/user/1/advert/',
+    url: 'http://localhost:5840/api/v1/user/1/advert/',
     headers: {
-      sender: 'user',
+      authorization: `bearer ${token}`,
     },
   };
   beforeAll((done) => {
@@ -99,14 +103,11 @@ describe('get all user adverts', () => {
   });
 });
 
-const queryStringTest = (addr, sentBy, parameter) => {
+const queryStringTest = (addr, parameter) => {
   describe('get adverts by filter(status)', () => {
     const data = {};
     const options = {
       url: addr,
-      headers: {
-        sender: sentBy,
-      },
     };
     beforeAll((done) => {
       Request.get(options, (error, response, body) => {
@@ -124,28 +125,26 @@ const queryStringTest = (addr, sentBy, parameter) => {
   });
 };
 
-queryStringTest('http://localhost:3000/api/v1/advert?status=available&condition=new', 'user', 'available');
-queryStringTest('http://localhost:3000/api/v1/advert?status=available&condition=used', 'user', 'available');
-queryStringTest('http://localhost:3000/api/v1/advert?status=available', 'user', 'available');
-queryStringTest('http://localhost:3000/api/v1/advert?body_type=sedan', 'user', 'body_type');
+queryStringTest('http://localhost:5840/api/v1/advert?status=available&condition=new', 'available');
+queryStringTest('http://localhost:5840/api/v1/advert?status=available&condition=used', 'available');
+queryStringTest('http://localhost:5840/api/v1/advert?status=available', 'available');
+queryStringTest('http://localhost:5840/api/v1/advert?body_type=sedan', 'body_type');
 
 describe('creating a new advert', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/advert/',
+    url: 'http://localhost:5840/api/v1/advert/',
     json: true,
     method: 'post',
     headers: {
-      sender: 'user',
+      authorization: `bearer ${token}`,
     },
     body: {
-      id: 5,
       owner: 1,
-      created_on: '21-05-2019',
       condition: 'New',
       status: 'available',
       price: 18000000,
-      manufacturer: 'Honda',
+      brand: 'Honda',
       model: 'CR-V',
       body_type: 'SUV',
     },
@@ -162,13 +161,11 @@ describe('creating a new advert', () => {
   });
   it('response object', () => {
     expect(data.body).toEqual({
-      id: 5,
       owner: 1,
-      created_on: '21-05-2019',
       condition: 'New',
       status: 'available',
       price: 18000000,
-      manufacturer: 'Honda',
+      brand: 'Honda',
       model: 'CR-V',
       body_type: 'SUV',
     });
@@ -178,11 +175,11 @@ describe('creating a new advert', () => {
 describe('update advert status', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/advert/1/status',
+    url: 'http://localhost:5840/api/v1/advert/1/status',
     json: true,
     method: 'patch',
     headers: {
-      sender: 'user',
+      authorization: `bearer ${token}`,
     },
     body: {
       status: 'sold',
@@ -206,11 +203,11 @@ describe('update advert status', () => {
 describe('update non-existent advert status', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/advert/00123/status',
+    url: 'http://localhost:5840/api/v1/advert/00123/status',
     json: true,
     method: 'patch',
     headers: {
-      sender: 'user',
+      authorization: `bearer ${token}`,
     },
     body: {
       status: 'sold',
@@ -231,11 +228,11 @@ describe('update non-existent advert status', () => {
 describe('update advert price', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/advert/1/price',
+    url: 'http://localhost:5840/api/v1/advert/1/price',
     json: true,
     method: 'patch',
     headers: {
-      sender: 'user',
+      authorization: `bearer ${token}`,
     },
     body: {
       price: 14000000,
@@ -258,9 +255,9 @@ describe('update advert price', () => {
 describe('deleting an advert', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/advert/2',
+    url: 'http://localhost:5840/api/v1/advert/2',
     headers: {
-      sender: 'admin',
+      authorization: `bearer ${token}`,
     },
   };
   beforeAll((done) => {
@@ -281,7 +278,7 @@ describe('deleting an advert', () => {
 describe('deleting non-existent advert', () => {
   const data = {};
   const options = {
-    url: 'http://localhost:3000/api/v1/advert/00123',
+    url: 'http://localhost:5840/api/v1/advert/00123',
     headers: {
       sender: 'admin',
     },
