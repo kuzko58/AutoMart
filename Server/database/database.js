@@ -1,11 +1,7 @@
 import { Pool } from 'pg';
 
 const pool = new Pool({
-  user: 'postgres',
-  password: 'colonel09',
-  host: 'localhost',
-  port: 5432,
-  database: 'automart',
+  connectionString: process.env.DATABASE_URL,
 });
 
 export default pool;

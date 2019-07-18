@@ -8,7 +8,7 @@ import refresh from '../Server/database/dbquery';
 const { createDb, dropDb } = refresh;
 const start = () => Server;
 start();
-/* **** user tests **** */
+
 describe('Users Tests', () => {
   beforeAll((done) => {
     process.env.NODE_ENV = 'test';
