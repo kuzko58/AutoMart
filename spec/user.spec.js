@@ -1,15 +1,37 @@
 /* eslint-env jasmine */
 import Request from 'request';
+import debug from 'debug';
 import Server from '../Server/src/server';
+import db from '../Server/database/database';
+import refresh from '../Server/database/dbquery';
 
+const { createDb, dropDb } = refresh;
 const start = () => Server;
 start();
+
+
 describe('Users Tests', () => {
-  beforeAll(() => {
+  beforeAll((done) => {
     process.env.NODE_ENV = 'test';
+    db.connect()
+      .then(
+        client => client.query(createDb)
+          .catch(e => debug(e))
+          .finally(() => client.release()),
+      )
+      .catch(e => debug(e))
+      .finally(() => done());
   });
-  afterAll(() => {
+  afterAll((done) => {
     process.env.NODE_ENV = 'none';
+    db.connect()
+      .then(
+        client => client.query(dropDb)
+          .catch(e => debug(e))
+          .finally(() => client.release()),
+      )
+      .catch(e => debug(e))
+      .finally(() => done());
   });
 
   describe('creating a new user', () => {

@@ -1,7 +1,11 @@
 /* eslint-env jasmine */
 import Request from 'request';
 import jwt from 'jsonwebtoken';
+import debug from 'debug';
 import Server from '../Server/src/server';
+import db from '../Server/database/database';
+import refresh from '../Server/database/dbquery';
+
 
 const start = () => Server;
 start();
@@ -14,15 +18,31 @@ const Admin = {
   address: 'Lagos',
   is_admin: true,
 };
-
+const { createDb, dropDb } = refresh;
 const token = jwt.sign(Admin, process.env.secret_key);
 
 describe('Cars Tests', () => {
-  beforeAll(() => {
+  beforeAll((done) => {
     process.env.NODE_ENV = 'test';
+    db.connect()
+      .then(
+        client => client.query(createDb)
+          .catch(e => debug(e))
+          .finally(() => client.release()),
+      )
+      .catch(e => debug(e))
+      .finally(() => done());
   });
-  afterAll(() => {
+  afterAll((done) => {
     process.env.NODE_ENV = 'none';
+    db.connect()
+      .then(
+        client => client.query(dropDb)
+          .catch(e => debug(e))
+          .finally(() => client.release()),
+      )
+      .catch(e => debug(e))
+      .finally(() => done());
   });
 
 
