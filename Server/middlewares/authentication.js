@@ -1,13 +1,19 @@
 import jwt from 'jsonwebtoken';
 
-const generateToken = ({
-  id, firstName, lastName, email, address, isAdmin, password
-}) => new Promise((resolve) => {
-  const token = jwt.sign({
-    id, email, isAdmin, iss: 'AutoMart',
-  }, process.env.secret_key, { expiresIn: '24h' });
+const generateToken = user => new Promise((resolve) => {
+  const payload = {
+    id: user.id,
+    email: user.email,
+    is_admin: user.is_admin,
+    iss: 'AutoMart',
+  };
+  const token = jwt.sign(payload, process.env.secret_key, { expiresIn: '24h' });
   resolve({
-    token, id, firstName, lastName, email, address, password
+    token,
+    id: user.id,
+    first_name: user.first_name,
+    last_name: user.last_name,
+    email: user.email,
   });
 });
 
@@ -24,7 +30,7 @@ const verifyToken = (req, res, next) => {
 };
 
 const identify = (req, res, next) => {
-  if (req.decoded.isAdmin) next();
+  if (req.decoded.is_admin) next();
   else res.status(401).send('unauthorized');
 };
 

@@ -15,10 +15,10 @@ const validator = {
     const schema = joi.object().keys({
       email: joi.string().trim().email().required(),
       password: joi.string().min(5).max(50).required(),
-      firstName: joi.string().min(2).max(50).required(),
-      lastName: joi.string().min(2).max(50).required(),
+      first_name: joi.string().min(2).max(50).required(),
+      last_name: joi.string().min(2).max(50).required(),
       address: joi.string().min(2).max(100).required(),
-      isAdmin: joi.bool(),
+      is_admin: joi.bool(),
     });
     joi.validate(req.body, schema, (err) => {
       if (err) res.send(err.message);
@@ -28,12 +28,13 @@ const validator = {
   createAd: (req, res, next) => {
     const schema = joi.object().keys({
       owner: joi.number().required(),
-      condition: joi.string().min(2).max(50).required(),
+      state: joi.string().min(2).max(50).required(),
       status: joi.string().min(2).max(50).required(),
       price: joi.number().required(),
-      brand: joi.string().min(2).max(50).required(),
+      manufacturer: joi.string().min(2).max(50).required(),
       model: joi.string().min(2).max(50).required(),
       body_type: joi.string().min(2).max(50).required(),
+      photo: joi.array().min(1).items(joi.string()).required(),
     });
     joi.validate(req.body, schema, (err) => {
       if (err) res.send(err.message);
@@ -53,9 +54,9 @@ const validator = {
   createOrder: (req, res, next) => {
     const schema = joi.object().keys({
       buyer: joi.number().required(),
-      carId: joi.number().required(),
+      car_id: joi.number().required(),
       price: joi.number().required(),
-      price_offer: joi.number().required(),
+      amount: joi.number().required(),
       status: joi.string().min(2).max(50).required(),
     });
     joi.validate(req.body, schema, (err) => {
@@ -65,7 +66,7 @@ const validator = {
   },
   updateOrder: (req, res, next) => {
     const schema = joi.object().keys({
-      price_offer: joi.number().required(),
+      amount: joi.number().required(),
     });
     joi.validate(req.body, schema, (err) => {
       if (err) res.send(err.message);
@@ -74,7 +75,7 @@ const validator = {
   },
   createFlag: (req, res, next) => {
     const schema = joi.object().keys({
-      carId: joi.number().required(),
+      car_id: joi.number().required(),
       reason: joi.string().min(5).max(50).required(),
       description: joi.string().min(5).max(50),
     });

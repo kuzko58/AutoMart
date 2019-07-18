@@ -1,27 +1,15 @@
 /* eslint-env jasmine */
 import Request from 'request';
-import jwt from 'jsonwebtoken';
 import debug from 'debug';
 import Server from '../Server/src/server';
 import db from '../Server/database/database';
 import refresh from '../Server/database/dbquery';
 
+const { createDb, dropDb } = refresh;
 const start = () => Server;
 start();
 
-const Admin = {
-  email: 'kuzko584@gmail.com',
-  first_name: 'Chisom',
-  last_name: 'Amaechi',
-  password: 'mypassword',
-  address: 'Lagos',
-  is_admin: true,
-};
-
-const token = jwt.sign(Admin, process.env.secret_key);
-const { createDb, dropDb } = refresh;
-
-describe('Orders Tests', () => {
+describe('Users Tests', () => {
   beforeAll((done) => {
     process.env.NODE_ENV = 'test';
     db.connect()
@@ -45,25 +33,23 @@ describe('Orders Tests', () => {
       .finally(() => done());
   });
 
-
-  describe('creating a new order', () => {
+  describe('creating a new user', () => {
     const data = {};
     const options = {
-      url: 'http://localhost:5840/api/v1/order/',
+      url: 'http://localhost:5840/api/v1/auth/signup',
       json: true,
       method: 'post',
-      headers: {
-        authorization: `bearer ${token}`,
-      },
       body: {
-        buyer: 2,
-        car_id: 1,
-        price: 13700000,
-        amount: 12000000,
-        status: 'pending',
+        email: 'johndoe3@example.com',
+        first_name: 'John',
+        last_name: 'Doe',
+        password: 'Password',
+        address: 'Lagos',
+        is_admin: false,
       },
     };
     beforeAll((done) => {
+      // process.env.NODE_ENV = 'test';
       Request.post(options, (error, response) => {
         data.status = response.statusCode;
         data.body = response.body;
@@ -73,32 +59,58 @@ describe('Orders Tests', () => {
     it('status 201', () => {
       expect(data.status).toBe(201);
     });
-    it('response object', () => {
+    it('response body', () => {
       expect(data.body).toEqual(jasmine.objectContaining({
-        buyer: 2,
-        car_id: 1,
-        price: 13700000,
-        price_offered: 12000000,
-        status: 'pending',
+        email: 'johndoe3@example.com',
+        first_name: 'John',
+        last_name: 'Doe',
       }));
     });
   });
 
-  describe('update order price offer', () => {
+  describe('creating an already existing user', () => {
     const data = {};
     const options = {
-      url: 'http://localhost:5840/api/v1/order/1/price',
+      url: 'http://localhost:5840/api/v1/auth/signup',
       json: true,
-      method: 'patch',
+      method: 'post',
       headers: {
-        authorization: `bearer ${token}`,
+        sender: 'user',
       },
       body: {
-        amount: 13000000,
+        email: 'johndoe@example.com',
+        first_name: 'John',
+        last_name: 'Doe',
+        password: 'Password',
+        address: 'Lagos',
+        is_admin: false,
       },
     };
     beforeAll((done) => {
-      Request.patch(options, (error, response) => {
+      Request.post(options, (error, response) => {
+        data.status = response.statusCode;
+        data.body = response.body;
+        done();
+      });
+    });
+    it('status 409', () => {
+      expect(data.status).toBe(409);
+    });
+  });
+
+  describe('login a user', () => {
+    const data = {};
+    const options = {
+      url: 'http://localhost:5840/api/v1/auth/signin',
+      json: true,
+      method: 'post',
+      body: {
+        email: 'johndoe@example.com',
+        password: 'Password',
+      },
+    };
+    beforeAll((done) => {
+      Request.post(options, (error, response) => {
         data.status = response.statusCode;
         data.body = response.body;
         done();
@@ -107,58 +119,54 @@ describe('Orders Tests', () => {
     it('status 202', () => {
       expect(data.status).toBe(202);
     });
-    it('response object', () => {
-      expect(data.body.new_price_offered).toBe(13000000);
+    it('response body', () => {
+      expect(data.body.email).toBe('johndoe@example.com');
     });
   });
 
-  describe('update non-existent order price offer', () => {
+  describe('login a non-existing user', () => {
     const data = {};
     const options = {
-      url: 'http://localhost:5840/api/v1/order/734/price',
+      url: 'http://localhost:5840/api/v1/auth/signin',
       json: true,
-      method: 'patch',
-      headers: {
-        authorization: `bearer ${token}`,
-      },
+      method: 'post',
       body: {
-        amount: 13000000,
+        email: 'johndoe25@example.com',
+        password: 'Password',
       },
     };
     beforeAll((done) => {
-      Request.patch(options, (error, response) => {
+      Request.post(options, (error, response) => {
         data.status = response.statusCode;
         data.body = response.body;
         done();
       });
     });
-    it('404, item not found', () => {
+    it('status 404', () => {
       expect(data.status).toBe(404);
     });
   });
 
-  describe('update a non-pending order price offer', () => {
+  describe('login a user with wrong password', () => {
     const data = {};
     const options = {
-      url: 'http://localhost:5840/api/v1/order/2/price',
+      url: 'http://localhost:5840/api/v1/auth/signin',
       json: true,
-      method: 'patch',
-      headers: {
-        authorization: `bearer ${token}`,
-      },
+      method: 'post',
       body: {
-        amount: 13000000,
+        email: 'johndoe@example.com',
+        password: 'Password2',
       },
     };
     beforeAll((done) => {
-      Request.patch(options, (error, response) => {
+      Request.post(options, (error, response) => {
         data.status = response.statusCode;
         data.body = response.body;
         done();
       });
     });
-    it('failed update', () => {
-      expect(data.status).toBe(405);
+    it('status 401', () => {
+      expect(data.status).toBe(401);
     });
   });
 });
