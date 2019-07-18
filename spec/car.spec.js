@@ -158,7 +158,7 @@ describe('Cars Tests', () => {
         manufacturer: 'Honda',
         model: 'CR-V',
         body_type: 'SUV',
-        photo: ['this is a test'],
+        photo: ['my photo'],
       },
     };
     beforeAll((done) => {
@@ -180,7 +180,7 @@ describe('Cars Tests', () => {
         manufacturer: 'Honda',
         model: 'CR-V',
         body_type: 'SUV',
-        photo: ['this is a test'],
+        photo: ['my photo'],
       }));
     });
   });
