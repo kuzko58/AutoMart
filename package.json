@@ -44,7 +44,7 @@
     "debug": "^4.1.1",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
-    "express-fileupload": "^1.1.5",
+    "express-fileupload": "^1.1.9",
     "jasmine": "^3.4.0",
     "jasmine-core": "^3.4.0",
     "joi": "^14.3.1",
